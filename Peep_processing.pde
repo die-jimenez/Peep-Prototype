@@ -1,10 +1,8 @@
-import TUIO.*;
 import fisica.*;
 import ddf.minim.*;
 
 FWorld mundo;
 Minim minim;
-TuioProcessing tuio;
 
 Camara camara;
 Intro intro;
@@ -19,7 +17,7 @@ PImage fondo;
 //------------------------ DEFINIR EL TAMAÑO DE LA UNIDAD
 float unidad = 40;
 String escena = "intro";
-boolean desarrollador = false;
+boolean desarrollador = true;
 boolean modoAsistido = true;
 
 
@@ -33,7 +31,6 @@ void setup() {
 
   Fisica.init(this);
   minim = new Minim(this);
-  tuio = new TuioProcessing(this);
 
   mundo = new FWorld(-2000, -2000, 4000, 3000);
   mundo.setGravity(0, 0);
@@ -42,9 +39,9 @@ void setup() {
   intro = new Intro();
   bird = new Bird();
   mapa = new Mapa();
-  
+
   musica = minim.loadFile(dataPath("sonidos") + "//" + "Hidden Temple.mp3", 2048);
-  //musica.loop();
+  musica.loop();
 }
 
 
@@ -60,7 +57,7 @@ void draw() {
   }
 
 
-  if (escena == "juego") 
+  if (escena == "juego"  ||  escena == "ganaste") 
   {
     background(#b1adff);
     image( fondo, -750-bird.getX(), -2000-bird.getY() );
@@ -76,19 +73,18 @@ void draw() {
     mapa.DibujarNiveles();
     popMatrix();
 
-    //------------------------------
-    camara.grilla.Update();
-    //println("frameRate " + frameRate);
-    //------------------------------
-  }
-  
-  if (escena.equals("menu")) 
-  {
-    //musica.loop();
-  }
-  
-  //println(frameCount);
-}
+    if (desarrollador) {
+      camara.grilla.Update();
+      //println("frameRate " + frameRate);
+    }
+
+    if (escena == "ganaste") {
+      new PantallaDeVictoria();
+      bird.estado = "parado";
+      noLoop();
+    }
+  }//end escena==juego
+}//end Draw
 
 
 //--------------------------------------------
@@ -116,7 +112,7 @@ void contactStarted(FContact colision) {
   if (other.getName() == "areaNoElegida") {//Area interactiva
     bird.ColisionAreaInteractivaDePlataformas(other);
   }
-  
+
   if (other.getName() == "areaDeCaida") {
     bird.ColisionAreaDeCaida(other);
   }
@@ -128,7 +124,6 @@ void contactStarted(FContact colision) {
   if (other.getName() == "plataforma") {
     bird.ColisionPlataforma(colision, other);
     //println(other.getName() + frameCount);
-    println(other.getMass());
   }
 
   if (other.getName() == "cambiarDireccion_derecha"  ||  other.getName() == "cambiarDireccion_izquierda") {

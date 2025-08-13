@@ -16,8 +16,6 @@ class Plataforma extends FBox {
   private PImage textura;
 
   public float birdDireccion = 1;
-  private boolean conTuio = true;
-  private boolean rotacionIgualadaConTuio = false;
 
 
   //--------------------------------------------
@@ -147,7 +145,6 @@ class Plataforma extends FBox {
     //Plataforma controlable
     if (estado == "controlable"  &&  areaInteractiva.getName() == "areaElegida") {
       bird.GetPlataformaControlable(this);
-      IgualarRotacionConTuio();
       Girar();  
       LimitarGiro();
       //println("velocidad angular " + this.getAngularVelocity());
@@ -183,30 +180,6 @@ class Plataforma extends FBox {
         if (keyCode == LEFT) ancla.adjustAngularVelocity(-speed);
       }
     }
-
-    //Control con Reactivision
-    if (conTuio) {
-      if (id1Presente) {
-        
-        //this.setAngularVelocity(getAngularVelocity()*0.7);
-        //adjustAngularVelocity(diferenciaDeRotacion/5);
-        //this.resetForces();
-        
-        
-        //this.setAngularVelocity(getAngularVelocity()*0.7);//---modo1
-        this.setAngularVelocity(getAngularVelocity()*0.7);//---modo1
-        
-        
-        addTorque(diferenciaDeRotacion * factor);
-
-
-        //println("anterior " + rotacionAnterior);
-        //println("actual " + rotacionActual);
-        if (diferenciaDeRotacion != 0) {
-          //println("rotacion diferencial " + diferenciaDeRotacion);
-        }
-      }
-    }
   }
 
   //---------------------
@@ -237,16 +210,6 @@ class Plataforma extends FBox {
     return densidadRelativa;
   }
   
-
-  //---------------------
-  void IgualarRotacionConTuio() {
-    if (conTuio) 
-      if (!rotacionIgualadaConTuio) {
-        this.setRotation(radians(rotacionActual));
-        rotacionIgualadaConTuio = true;
-      }
-  }
-
 
   //--------------------------------------------
   void DesactivarPlataformas() {

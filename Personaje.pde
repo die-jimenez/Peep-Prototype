@@ -93,7 +93,6 @@ class Bird extends FBox {
       Reiniciar();
       plataformaControlable.setAngularVelocity(0);
       plataformaControlable.rotacionIgualadaConTuio = false;
-      plataformaControlable.IgualarRotacionConTuio();
       estado = "volando";
     }
 

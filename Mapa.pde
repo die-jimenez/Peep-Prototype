@@ -204,8 +204,8 @@ class Nivel4 {
   float nivelPosX = 2*unidad;
   float nivelPosY = 2*unidad;
 
-
-  Nivel4() {    
+  Nivel4() {
+    CrearFamilyBird();
     suelo[0] = new Plataforma (nivelPosX + (50 * unidad), nivelPosY + (-28 * unidad), 5 * unidad, 5 * unidad); 
     suelo[1] = new Plataforma (nivelPosX + (38 * unidad), nivelPosY + (-31 * unidad), 5 * unidad, 5 * unidad);
     suelo[2] = new Plataforma (nivelPosX + (27 * unidad), nivelPosY + (-32 * unidad), 4 * unidad, 4 * unidad);
@@ -214,6 +214,7 @@ class Nivel4 {
     suelo[5] = new Plataforma (nivelPosX + (-8 * unidad), nivelPosY + (-23.5 * unidad), 12 * unidad, 12 * unidad);
     println("nivel 4 inicializo");
   }
+
 
   void Start() {
     for (int i=0; i < suelo.length; i++) {
@@ -226,11 +227,15 @@ class Nivel4 {
     AddEventosDeCambioDeDireccionDeSprites();
   }
 
+
   void Update() {   
     for (int i=0; i < suelo.length; i++) {
       suelo[i].Update();
     }
+    if (suelo[5].areaInteractiva.isTouchingBody(bird)) 
+      escena = "ganaste";
   }
+
 
   void AddEventosDeCambioDeDireccionDeSprites() {
     for (int i=0; i < suelo.length-1; i++) {
@@ -239,5 +244,17 @@ class Nivel4 {
     AreaCambiarDireccion areaExcepcional = new AreaCambiarDireccion(suelo[0], "UP", 1);
     areaExcepcional.adjustPosition(200, 350);
     areaExcepcional.addToWorld(mundo);
+  }
+
+
+  void CrearFamilyBird() {
+    FBox familyBird = new FBox(50, 175);
+    PImage motherAndBirds = loadImage("motherAndBirds.png");
+    float posX = nivelPosX + (-8 * unidad) + (6 * unidad);
+    float posY = nivelPosY + (-23.5 * unidad)-(familyBird.getHeight()/2)+10;
+    familyBird.setPosition(posX, posY);
+    familyBird.attachImage(motherAndBirds);
+    familyBird.setSensor(true);
+    mundo.add(familyBird);
   }
 }//end method

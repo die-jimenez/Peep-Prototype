@@ -1,3 +1,26 @@
+//----------------------------------------------------------------------------------------  
+class PantallaDeVictoria {
+  float [] position = new float[2];
+  long frameDeVictoria;
+
+  PantallaDeVictoria () {
+    pushStyle();
+    fill(40,160);
+    rect(0,0, width, height);
+    textSize(80);
+    textAlign(CENTER);
+    fill(255, 255, 0);//Amarillo
+    text("GANASTE", width/2, height/2);
+    popStyle();
+    frameDeVictoria = frameCount;
+  }
+
+  
+}
+
+
+
+
 
 //----------------------------------------------------------------------------------------  
 class ResetArea extends FBox {
