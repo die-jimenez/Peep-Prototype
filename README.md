@@ -2,7 +2,7 @@
 
 An accessible rage game, developed entirely in Java without using any game engine. Inspired by *“Getting Over It”* and *Angry Birds*, it puts the player in control of a great tree that must help Peep, a small bird that fell from its nest. To do so, the player must catapult her between its branches until she’s reunited with her family. Do you have what it takes to help little Peep?
 
----
+&nbsp;
 
 ## My Role
 
